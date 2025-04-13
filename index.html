@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="date-container">
+        <div class="date-time">
+            <h5 class="time"></h5>
+            <h5 class="date"></h5>
+        </div>
+    </div>
+    <h1 class="name">Makwans Dashboard</h1>
+
+    <div class="main-container">
+        <div class="content">
+            <div class="quick-links">
+                <h3>Snabblänkar</h3>
+
+            </div>
+            <button class="add-link-btn" onclick="createLink()">🔍 Lägg till länk</button>
+        </div>
+        <div class="weather-container content">
+            <div class="weather-content">
+                <h3>Väder Rapport</h3>
+                <p class="today">Idag</p>
+                <h1 class="city"></h1>
+                <p class="temperature"></p>
+                <p class="weather"></p>
+            </div>
+        </div>
+        <div class="news-container content">
+            <div class="news-content">
+                <button onclick="grabData()">Hämta Nyheter</button>
+                <h3><a href="" class="url title-url"></a></h3>
+                <p class="summary"></p>
+                <span class="author"></span>
+
+                
+            </div>
+        </div>
+        <div class="notes-container content">
+            <div class="notes-content">
+                <h3>Anteckningar</h3>
+
+        
+            </div>
+        </div>
+    </div>
+    
+
+
+    <script src="js/script.js"></script>
+</body>
+</html>
