@@ -106,25 +106,35 @@ function runData(data){
 }
 
 
-const ApiNews = '2LDOGS28CCUJNLWF';
 
 function grabData(){
-    fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey=${ApiNews}`)
+    fetch(`https://api.mediastack.com/v1/news?access_key=7a1f01e3b78823fdafd6055489304000&limit=3`)
     .then(response => response.json())
-    .then(data => getNews(data))
+    .then(data => getNews(data.data))
     .catch(error=> console.error('Error', error));
 }
 
+const newsContainer = document.querySelector('.news-container');
+
+const clickNews = document.querySelector('.get-news-btn').addEventListener('click', () =>{grabData()})
+
 function getNews(data){
-    console.log(data);
-    const title = document.querySelector('.title-url');
-    title.textContent = data.feed[0].title;
-    const url = document.querySelector('.url');
-    url.href = data.feed[0].url;
-    const summary = document.querySelector('.summary');
-    summary.textContent = data.feed[0].summary;
-    const time = document.querySelector('.time-published');
-    time.textContent = data.feed[0].time_published;
-    const author = document.querySelector('.author');
-    author.textContent = data.feed[0].authors;
+
+    data.forEach(news => {
+        const title = news.title;
+        const url = news.url;
+        const source = news.source;
+
+        const container = document.createElement('div');
+        container.classList.add('news-content');
+
+        container.innerHTML = `
+            <h3><a href='${url}'>${title}</a></h3>
+            <p class='source'>
+                Source: ${source}
+            </p>
+        `;
+
+        newsContainer.appendChild(container);
+    });
 }
