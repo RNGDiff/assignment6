@@ -48,7 +48,7 @@ function displayLinks(){
         createImg.src = `${httpLink}${link.url}${favicon}`;
         createLink.href = `${httpLink}${link.url}`;
         createLink.textContent = `${link.name}`;
-        delBtn.textContent = '❌';
+        delBtn.textContent = '✖️';
 
         delBtn.addEventListener('click', ()=>{
             links.splice(index, 1);
@@ -105,6 +105,7 @@ function runData(data){
 
 }
 
+// ^ NEWS SECTION // ^ NEWS SECTION
 
 
 function grabData(){
@@ -137,4 +138,73 @@ function getNews(data){
 
         newsContainer.appendChild(container);
     });
+}
+
+
+// !NOTES SECTION // !NOTES SECTION
+
+const createNote = document.querySelector('.create-note');
+const done = document.querySelector('.done-btn');
+const textArea = document.querySelector('.text-area');
+const notesContent = document.querySelector('.notes-content')
+
+let textNotes = [];
+
+// * REVEAL <TEXTAREA> AND DONE BTN
+createNote.addEventListener('click', ()=>{
+    done.style.display = 'block';
+    textArea.style.display = 'block';
+    textArea.value = '';
+    hideNotes()
+})
+// !HIDE NOTES
+function hideNotes(){
+    const notes = document.querySelectorAll('.text-container');
+    notes.forEach(note =>{
+        note.style.display = 'none';
+    })
+}
+// ~ HIDE TEXTAREA AND DONE BTN, TAKE OUR VALUE FROM TEXTAREA & PUSH IT TO ARRAY.
+done.addEventListener('click', ()=>{
+    done.style.display = 'none';
+    textArea.style.display = 'none';
+    textNotes.push({ text: textArea.value });
+    saveNotes();
+})
+// ! SAVE OUR TEXT VALUE FROM OUR ARRAY IN LOCALSTORAGE.
+function saveNotes(){
+    localStorage.setItem('notes', JSON.stringify(textNotes));
+    displayNotes()
+}
+// ^ DISPLAY OUR TEXT VALUE FROM LOCALSTORAGE.
+function displayNotes(){
+    notesContent.innerHTML = '';
+    textNotes.forEach((note,index) => {
+        const notes = document.createElement('div');
+        const text = document.createElement('p');
+        const delBtn = document.createElement('button');
+        delBtn.classList.add('del-note');
+        delBtn.innerText = '✖️';
+        delBtn.addEventListener('click',()=>{
+            textNotes.splice(index, 1);
+            saveNotes();
+            displayNotes();
+        })
+        notes.classList.add('text-container');
+        text.classList.add('text');
+        text.innerText = note.text;
+        
+        notesContent.appendChild(notes);
+        notes.appendChild(text);
+        notes.appendChild(delBtn);
+    });
+}
+
+window.onload = ()=>{
+    const storage = localStorage.getItem('notes');
+    textNotes = JSON.parse(storage);
+    if (!textNotes){
+        textNotes = [];
+    }
+    displayNotes();
 }
